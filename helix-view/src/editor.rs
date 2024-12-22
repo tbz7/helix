@@ -835,7 +835,7 @@ impl WhitespaceRender {
         match *self {
             Self::Basic(val) => val,
             Self::Specific { default, space, .. } => {
-                space.or(default).unwrap_or(WhitespaceRenderValue::None)
+                space.or(default).unwrap_or(WhitespaceRenderValue::Trailing)
             }
         }
     }
@@ -843,7 +843,7 @@ impl WhitespaceRender {
         match *self {
             Self::Basic(val) => val,
             Self::Specific { default, nbsp, .. } => {
-                nbsp.or(default).unwrap_or(WhitespaceRenderValue::None)
+                nbsp.or(default).unwrap_or(WhitespaceRenderValue::Trailing)
             }
         }
     }
@@ -851,7 +851,7 @@ impl WhitespaceRender {
         match *self {
             Self::Basic(val) => val,
             Self::Specific { default, nnbsp, .. } => {
-                nnbsp.or(default).unwrap_or(WhitespaceRenderValue::None)
+                nnbsp.or(default).unwrap_or(WhitespaceRenderValue::Trailing)
             }
         }
     }
@@ -859,7 +859,7 @@ impl WhitespaceRender {
         match *self {
             Self::Basic(val) => val,
             Self::Specific { default, tab, .. } => {
-                tab.or(default).unwrap_or(WhitespaceRenderValue::None)
+                tab.or(default).unwrap_or(WhitespaceRenderValue::Trailing)
             }
         }
     }
@@ -868,7 +868,7 @@ impl WhitespaceRender {
             Self::Basic(val) => val,
             Self::Specific {
                 default, newline, ..
-            } => newline.or(default).unwrap_or(WhitespaceRenderValue::None),
+            } => newline.or(default).unwrap_or(WhitespaceRenderValue::Trailing),
         }
     }
 }
