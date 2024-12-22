@@ -1065,7 +1065,7 @@ impl<I: 'static + Send + Sync, D: 'static + Send + Sync> Component for Picker<I,
                     (self.callback_fn)(ctx, option, Action::Load);
                 }
             }
-            key!(Enter) => {
+            key!(Enter) | key!(Right) => {
                 // If the prompt has a history completion and is empty, use enter to accept
                 // that completion
                 if let Some(completion) = self
@@ -1089,6 +1089,12 @@ impl<I: 'static + Send + Sync, D: 'static + Send + Sync> Component for Picker<I,
                             ctx.editor.set_error(err.to_string());
                         }
                     }
+                    return close_fn(self);
+                }
+            }
+            key!(Left) => {
+                if let Some(option) = self.matcher.snapshot().get_item(0).map(|item| item.data) {
+                    (self.callback_fn)(ctx, option, Action::Replace);
                     return close_fn(self);
                 }
             }
