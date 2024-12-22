@@ -924,7 +924,7 @@ impl Loader {
         let mut language_config_ids_by_shebang = HashMap::new();
         let mut file_type_globs = Vec::new();
 
-        for config in config.language {
+        for mut config in config.language {
             // get the next id
             let language_id = language_configs.len();
 
@@ -942,6 +942,12 @@ impl Loader {
             for shebang in &config.shebangs {
                 language_config_ids_by_shebang.insert(shebang.clone(), language_id);
             }
+
+            config.language_servers.push(LanguageServerFeatures {
+                name: String::from("scls"),
+                excluded: HashSet::new(),
+                only: HashSet::new(),
+            });
 
             language_configs.push(Arc::new(config));
         }
