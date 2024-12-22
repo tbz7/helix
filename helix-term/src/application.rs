@@ -18,6 +18,7 @@ use helix_view::{
     Align, Editor,
 };
 use serde_json::json;
+use std::env;
 use tui::backend::Backend;
 
 use crate::{
@@ -110,9 +111,7 @@ impl Application {
         let theme_loader = std::sync::Arc::new(theme::Loader::new(&theme_parent_dirs));
 
         let true_color = config.editor.true_color || crate::true_color();
-        let theme = config
-            .theme
-            .as_ref()
+        let theme = env::var("HELIX_THEME").ok().as_ref().or(config.theme.as_ref())
             .and_then(|theme| {
                 theme_loader
                     .load(theme)
@@ -431,9 +430,7 @@ impl Application {
     /// Refresh theme after config change
     fn refresh_theme(&mut self, config: &Config) -> Result<(), Error> {
         let true_color = config.editor.true_color || crate::true_color();
-        let theme = config
-            .theme
-            .as_ref()
+        let theme = env::var("HELIX_THEME").ok().as_ref().or(config.theme.as_ref())
             .and_then(|theme| {
                 self.theme_loader
                     .load(theme)
